@@ -115,9 +115,9 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
 
         const prompt = `אנא נתח תמונה זו עבור מצב: "${mode}". החזר אך ורק JSON תקין התואם למבנה שביקשתי.`;
 
-        const response = await ai.models.generateContent({
-            model: 'gemini-1.5-flash',
-            contents: [
+        const interaction = await ai.interactions.create({
+            model: 'gemini-3.8-flash',
+            input: [
                 prompt,
                 {
                     inlineData: {
@@ -126,13 +126,10 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
                     }
                 }
             ],
-            config: {
-                systemInstruction: SYSTEM_PROMPT,
-                responseMimeType: "application/json"
-            }
+            systemInstruction: SYSTEM_PROMPT
         });
 
-        let text = response.text;
+        let text = interaction.output_text;
         
         if (!text) {
              throw new Error("No response from AI");
