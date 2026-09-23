@@ -65,7 +65,7 @@ const SYSTEM_PROMPT = `
 =========================================
 פורמט פלט (JSON מחמיר)
 =========================================
-חובה עליך להחזיר אך ורק אובייקט JSON תקין וחוקי. אל תעטוף את ה-JSON בבלוקים של Markdown (ללא \`\`\`json).
+חובה עליך להחזיר אך ורק אובייקט JSON תקין וחוקי. אל תעטוף את ה-JSON בבלוקים של Markdown (ללא ```json).
 כל הערכים עבור מפתחות ה-JSON חייבים להיות בשפה העברית (למעט המפתחות עצמם, שחייבים להישאר באנגלית בדיוק כפי שמוצג).
 
 אם התמונה היא של עין (Eye), החזר את המבנה הבא:
@@ -138,8 +138,8 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
              throw new Error("No response from AI");
         }
 
-        if (text.startsWith('\`\`\`')) {
-           text = text.replace(/^\`\`\`(?:json)?/, '').replace(/\`\`\`$/, '').trim();
+        if (text.startsWith('```')) {
+           text = text.replace(/^```(?:json)?/, '').replace(/```$/, '').trim();
         }
 
         const resultJson = JSON.parse(text);
@@ -152,5 +152,5 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(\`Server listening on port \${port}\`);
+    console.log(`Server listening on port ${port}`);
 });
