@@ -100,11 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingState.classList.remove('hidden');
         resultSection.classList.add('hidden');
         
-        const formData = new FormData();
-        formData.append('image', selectedFile);
-        formData.append('mode', currentMode);
-
         try {
+            // Compress the image before uploading to avoid server OOM or timeouts
+            const compressedFile = await resizeImage(selectedFile, 1024);
+            
+            const formData = new FormData();
+            formData.append('image', compressedFile);
+            formData.append('mode', currentMode);
+
             const response = await fetch('/api/analyze', {
                 method: 'POST',
                 body: formData
@@ -230,5 +233,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
+    }
+
+    async function resizeImage(file, maxWidth = 1024) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxWidth) {
+                            width *= maxWidth / height;
+                            height = maxWidth;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob((blob) => {
+                        resolve(new File([blob], file.name || 'image.jpg', { type: 'image/jpeg' }));
+                    }, 'image/jpeg', 0.8);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
     }
 });
