@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Or's Lash AI - עוזר וירטואלי</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <i class="fa-solid fa-wand-magic-sparkles logo-icon"></i>
+            <h1>Or's Lash AI</h1>
+        </div>
+        <p class="subtitle">עוזר וירטואלי מבוסס AI להרמות ריסים</p>
+    </header>
+
+    <main class="container">
+        <div class="tabs">
+            <button class="tab-btn active" data-mode="eye">
+                <i class="fa-regular fa-eye"></i> אבחון עין לקוחה
+            </button>
+            <button class="tab-btn" data-mode="shield">
+                <i class="fa-solid fa-leaf"></i> זיהוי שתל סיליקון
+            </button>
+        </div>
+
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="imageInput" accept="image/*" capture="environment" hidden>
+                <div class="upload-content" id="uploadContent">
+                    <i class="fa-solid fa-camera upload-icon"></i>
+                    <h3>לחצי כאן להעלאת תמונה</h3>
+                    <p>או צלמי ישירות מהנייד</p>
+                </div>
+                <div class="preview-container hidden" id="previewContainer">
+                    <img id="imagePreview" alt="תצוגה מקדימה">
+                    <button class="remove-btn" id="removeBtn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            
+            <button class="analyze-btn" id="analyzeBtn" disabled>
+                <i class="fa-solid fa-microchip"></i> נתחי תמונה
+            </button>
+        </section>
+
+        <div class="loading-state hidden" id="loadingState">
+            <div class="spinner"></div>
+            <p>ה-AI מנתח את התמונה...</p>
+        </div>
+
+        <section class="result-section hidden" id="resultSection">
+            <!-- Results will be injected here -->
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "or-lashes-ai",
+  "version": "1.0.0",
+  "description": "Lash Lift AI Assistant for Or",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^0.1.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1"
+  }
+}
