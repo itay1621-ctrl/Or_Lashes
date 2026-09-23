@@ -116,7 +116,7 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
         const prompt = `אנא נתח תמונה זו עבור מצב: "${mode}". החזר אך ורק JSON תקין התואם למבנה שביקשתי.`;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             contents: [
                 prompt,
                 {
