@@ -123,7 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (!response.ok) {
-                throw new Error(data.error || 'שגיאה בניתוח התמונה');
+                let errorMessage = data.error || 'שגיאה בניתוח התמונה';
+                if (data.details) errorMessage += '\n' + data.details;
+                if (data.fullError) errorMessage += '\n' + data.fullError;
+                throw new Error(errorMessage);
             }
 
             renderResults(data);
