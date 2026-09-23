@@ -120,6 +120,10 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
             input: [
                 {
                     type: 'text',
+                    text: SYSTEM_PROMPT
+                },
+                {
+                    type: 'text',
                     text: prompt
                 },
                 {
@@ -127,8 +131,7 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
                     data: req.file.buffer.toString('base64'),
                     mime_type: req.file.mimetype
                 }
-            ],
-            systemInstruction: SYSTEM_PROMPT
+            ]
         });
 
         let text = interaction.output_text;
