@@ -113,7 +113,7 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
              return res.status(400).json({ error: 'Invalid mode.' });
         }
 
-        const prompt = \`אנא נתח תמונה זו עבור מצב: "\${mode}". החזר אך ורק JSON תקין התואם למבנה שביקשתי.\`;
+        const prompt = `אנא נתח תמונה זו עבור מצב: "${mode}". החזר אך ורק JSON תקין התואם למבנה שביקשתי.`;
 
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
