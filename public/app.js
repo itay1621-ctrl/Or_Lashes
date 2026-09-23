@@ -113,7 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: formData
             });
 
-            const data = await response.json();
+            let data;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                data = await response.json();
+            } else {
+                const text = await response.text();
+                throw new Error('השרת לא החזיר תשובה תקינה. ייתכן שהוא מאתחל כרגע, אנא המתן דקה ונסה שוב.');
+            }
             
             if (!response.ok) {
                 throw new Error(data.error || 'שגיאה בניתוח התמונה');
