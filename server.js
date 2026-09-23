@@ -118,12 +118,14 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
         const interaction = await ai.interactions.create({
             model: 'gemini-3.8-flash',
             input: [
-                prompt,
                 {
-                    inlineData: {
-                        data: req.file.buffer.toString('base64'),
-                        mimeType: req.file.mimetype
-                    }
+                    type: 'text',
+                    text: prompt
+                },
+                {
+                    type: 'image',
+                    data: req.file.buffer.toString('base64'),
+                    mime_type: req.file.mimetype
                 }
             ],
             systemInstruction: SYSTEM_PROMPT
@@ -144,7 +146,7 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
 
     } catch (error) {
         console.error('Error analyzing image:', error);
-        res.status(500).json({ error: 'Failed to analyze image. Please try again.', details: error.message });
+        res.status(500).json({ error: 'Failed to analyze image. Please try again.', details: error.message, fullError: JSON.stringify(error, null, 2) });
     }
 });
 
