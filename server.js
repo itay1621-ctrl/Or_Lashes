@@ -101,9 +101,6 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
 
         const interaction = await ai.interactions.create({
             model: 'gemini-3.8-flash',
-            config: {
-                temperature: 0.1,
-            },
             input: [
                 {
                     type: 'text',
