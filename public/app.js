@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentMode = 'eye';
     let selectedFile = null;
 
+    // Wake up the Render server (prevent cold-start timeout)
+    fetch('/api/ping').catch(() => {});
+
     // Tab switching
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {

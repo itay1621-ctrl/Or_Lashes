@@ -153,6 +153,10 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
     }
 });
 
+app.get('/api/ping', (req, res) => {
+    res.status(200).send('pong');
+});
+
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
